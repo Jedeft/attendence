@@ -89,6 +89,8 @@ public class CreateData {
 						//严重时随机迟到5小时以内
 						am += (random.nextInt(5) + 1) * 60 * 60 * 1000;
 					}
+				} else {
+					am -= (random.nextInt(30) * 60 + random.nextInt(60)) * 1000;
 				}
 				signRecord.setSign_time(am);
 				signRecordService.insertOne(signRecord);
@@ -97,11 +99,13 @@ public class CreateData {
 					//一半概率出现严重早退现象
 					if (JudgeUtils.getBigProbability()) {
 						//不严重时随机早退30分钟内
-						pm += random.nextInt(30) * 60 * 1000;
+						pm -= random.nextInt(30) * 60 * 1000;
 					} else {
 						//严重时随机早退2小时以内
 						pm -= (random.nextInt(2) + 1) * 60 * 60 * 1000;
 					}
+				} else {
+					pm += (random.nextInt(60) * 60 + random.nextInt(60)) * 1000;
 				}
 				signRecord.setSign_time(pm);
 				signRecordService.insertOne(signRecord);
@@ -110,8 +114,6 @@ public class CreateData {
 			}
 			signDate = new Date(DateUtils.getDayTime(startDate));
 		}
-		
-		
 	}
     
 }
