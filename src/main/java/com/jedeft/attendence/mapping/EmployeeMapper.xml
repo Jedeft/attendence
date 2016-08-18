@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jedeft.attendence.dao.IEmployeeDao" >
+
+	<!-- 添加一条员工信息 -->
+	<insert id="insertOne" parameterType="com.jedeft.attendence.data.Employee">
+		INSERT INTO 
+			employee(name,create_time)
+		VALUES
+			(#{name},#{create_time})
+	</insert>
+	
+</mapper>
