@@ -1,5 +1,7 @@
 package com.jedeft.attendence.dao;
 
+import java.util.List;
+
 import com.jedeft.attendence.data.Employee;
 
 
@@ -16,4 +18,10 @@ public interface IEmployeeDao {
 	 * @return
 	 */
 	public int insertOne(Employee employee);
+	
+	/**
+	 * 检索全体员工信息
+	 * @return
+	 */
+	public List<Employee> searchData();
 }

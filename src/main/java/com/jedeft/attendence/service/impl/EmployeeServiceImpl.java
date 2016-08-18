@@ -1,5 +1,7 @@
 package com.jedeft.attendence.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,11 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		if (employeeDao.insertOne(employee) < 1) {
 			throw new ServiceException(ErrorCode.INSERT_FAIL);
 		}
+	}
+
+	@Override
+	public List<Employee> searchData() {
+		return employeeDao.searchData();
 	}
 
 }

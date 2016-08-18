@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jedeft.attendence.dao.ISignRecordDao" >
+
+	<!-- 添加一条签到记录 -->
+	<insert id="insertOne" parameterType="com.jedeft.attendence.data.SignRecord">
+		INSERT INTO 
+			sign_record(employee_id, sign_date, sign_time, create_time)
+		VALUES
+			(#{employee_id}, #{sign_date}, #{sign_time},#{create_time})
+	</insert>
+	
+</mapper>

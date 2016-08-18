@@ -1,5 +1,7 @@
 package com.jedeft.attendence.service;
 
+import java.util.List;
+
 import com.jedeft.attendence.data.Employee;
 
 /**
@@ -15,4 +17,9 @@ public interface IEmployeeService {
 	 * @param employee
 	 */
 	public void insertOne(Employee employee);
+	
+	/**
+	 * 检索全体员工信息
+	 */
+	public List<Employee> searchData();
 }
