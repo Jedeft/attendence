@@ -68,8 +68,8 @@ public class CreateData {
 		String endTime = "18:00:00";
 		Long amTime = DateUtils.getFromDawnTime(startTime);
 		Long pmTime = DateUtils.getFromDawnTime(endTime);
-		Date end = new Date(DateUtils.getDayTime(endDate));
-		Date signDate = new Date(DateUtils.getDayTime(startDate));
+		Date end = new Date(DateUtils.getDate(endDate));
+		Date signDate = new Date(DateUtils.getDate(startDate));
 		Random random = new Random();
 
 		for(Employee employee : employeeList) {
@@ -112,7 +112,7 @@ public class CreateData {
 				// 一天有 86400000 毫秒
 				signDate = new Date(signDate.getTime() + 86400000);
 			}
-			signDate = new Date(DateUtils.getDayTime(startDate));
+			signDate = new Date(DateUtils.getDate(startDate));
 		}
 	}
     

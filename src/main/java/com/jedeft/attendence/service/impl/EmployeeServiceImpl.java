@@ -35,4 +35,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		return employeeDao.searchData();
 	}
 
+	@Override
+	public Employee getOneById(Long id) {
+		return employeeDao.getOneById(id);
+	}
+
 }

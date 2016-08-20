@@ -21,23 +21,40 @@ public class DateUtils {
 	
 	/**
 	 * 根据yyyy-MM-dd日期获取Long值
-	 * @param day
+	 * @param date
 	 * @return
 	 * @throws ParseException
 	 */
-	public static Long getDayTime(String day) throws ParseException {
-		return dateSdf.parse(day).getTime();
+	public static Long getDate(String date) throws ParseException {
+		return dateSdf.parse(date).getTime();
 	}
 	
 	/**
-	 * 根据hh-mm-ss时间获取距离凌晨毫秒数
-	 * @param Time
+	 * 根据yyyy-MM-dd HH:mm:ss日期获取Long值
+	 * @param time
+	 * @return
+	 * @throws ParseException
+	 */
+	public static Long getTime(String time) throws ParseException {
+		return timeSdf.parse(time).getTime();
+	}
+	
+	/**
+	 * 根据HH-mm-ss时间获取距离凌晨毫秒数
+	 * @param Time 格式可为yyyy-MM-ss HH:mm:ss   也可为HH:mm:ss
 	 * @return
 	 * @throws ParseException 
 	 */
 	public static Long getFromDawnTime(String time) throws ParseException {
-		Long start = getDayTime("2016-1-1");
-		Long end = timeSdf.parse("2016-1-1 " + time).getTime();
+		Long start = 0L;
+		Long end = 0L;
+		if (time.contains("-")) {
+			start = dateSdf.parse(time).getTime();
+			end = timeSdf.parse(time).getTime();
+		} else {
+			start = getDate("2016-1-1");
+			end = timeSdf.parse("2016-1-1 " + time).getTime();
+		}
 		return end - start;
 	}
 	
@@ -55,7 +72,7 @@ public class DateUtils {
 	 * @throws ParseException 
 	 */
 	public static String convertClock2String(Long time) throws ParseException{
-		Long day = getDayTime("2016-1-1");
+		Long day = getDate("2016-1-1");
 		return clockSdf.format(new Date(day + time));
 	}
 }

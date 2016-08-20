@@ -22,4 +22,11 @@ public interface IEmployeeService {
 	 * 检索全体员工信息
 	 */
 	public List<Employee> searchData();
+	
+	/**
+	 * 根据ID获取员工信息
+	 * @param id
+	 * @return
+	 */
+	public Employee getOneById(Long id);
 }

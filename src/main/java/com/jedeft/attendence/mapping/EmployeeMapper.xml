@@ -18,4 +18,14 @@
 			(#{name}, #{create_time})
 	</insert>
 	
+	<!-- 检索所有员工信息 -->
+	<select id="getOneById" parameterType="java.lang.Long" resultType="com.jedeft.attendence.data.Employee">
+		SELECT 
+			*
+		FROM
+			employee
+		WHERE
+			id = #{id}
+	</select>
+	
 </mapper>
