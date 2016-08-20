@@ -18,6 +18,12 @@ import com.jedeft.attendence.service.IParametersService;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 
+/**
+ * 
+ * @Description: 考勤参数Controller
+ * @author Jedeft
+ * @date 2016年8月20日 下午8:43:16
+ */
 @RestController
 public class ParametersController {
 
