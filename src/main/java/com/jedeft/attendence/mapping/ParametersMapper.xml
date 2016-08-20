@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jedeft.attendence.dao.IParametersDao" >
+
+	<!-- 获取考勤配置 -->
+	<select id="getOne" resultType="com.jedeft.attendence.data.Parameters">
+		SELECT 
+			start_time, end_time, late_time, early_time, min_work_time
+		FROM
+			parameters
+		LIMIT 1
+	</select>
+
+	<!-- 添加考勤配置 -->
+	<insert id="insertOne" parameterType="com.jedeft.attendence.data.Parameters">
+		INSERT INTO 
+			parameters(start_time, end_time, late_time, early_time, min_work_time, create_time)
+		VALUES
+			(#{start_time}, #{end_time}, #{late_time}, #{early_time}, #{min_work_time}, #{create_time})
+	</insert>
+	
+	<!-- 更新考勤配置 -->
+	<update id="updateOne" parameterType="com.jedeft.attendence.data.Parameters">
+		UPDATE
+			parameters
+		SET
+			start_time = #{start_time},
+			end_time = #{end_time},
+			late_time = #{late_time},
+			early_time = #{early_time},
+			min_work_time = #{min_work_time},
+			update_time = #{update_time}
+	</update>
+	
+</mapper>

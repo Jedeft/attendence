@@ -47,7 +47,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
 	}
 
 	private ApiInfo apiInfo() {
-		ApiInfo apiInfo = new ApiInfo("testbank API", "testbank 后台API文档", null,
+		ApiInfo apiInfo = new ApiInfo("attendence API", "考勤系统  API文档", null,
 				"Jedeft@163.com", "My License", "My Apps API License URL");
 		return apiInfo;
 	}
