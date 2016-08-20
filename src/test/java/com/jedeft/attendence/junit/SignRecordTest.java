@@ -1,8 +1,10 @@
 package com.jedeft.attendence.junit;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
 
@@ -59,7 +61,7 @@ public class SignRecordTest {
      * @throws Exception
      */
 	@Test
-	public void insertTest() throws Exception{
+	public void postTest() throws Exception{
 		SignRecordParams signRecordParams = new SignRecordParams();
 		List<Employee> list = employeeService.searchData();
 		signRecordParams.setEmployee_id(list.get(0).getId());
@@ -71,6 +73,25 @@ public class SignRecordTest {
 				   .accept(MediaType.APPLICATION_JSON)
 				   .characterEncoding(CharEncoding.UTF_8))
 			  .andExpect(jsonPath("$.errorCode").value(0))
+			  .andDo(print());
+	}
+	
+	/**
+     * url : /signRecord/{employee_id}
+     * method : POST
+     * @throws Exception
+     */
+	@Test
+	public void getTest() throws Exception{
+		SignRecordParams signRecordParams = new SignRecordParams();
+		List<Employee> list = employeeService.searchData();
+		signRecordParams.setEmployee_id(list.get(0).getId());
+		
+		mockMvc.perform(get("/signRecord/" + list.get(0).getId() + "?month=2016-5").contentType(MediaType.TEXT_HTML)
+				   .characterEncoding(CharEncoding.UTF_8)
+				   .accept(MediaType.APPLICATION_JSON)
+				   .characterEncoding(CharEncoding.UTF_8))
+			  .andExpect(status().isOk())
 			  .andDo(print());
 	}
 }

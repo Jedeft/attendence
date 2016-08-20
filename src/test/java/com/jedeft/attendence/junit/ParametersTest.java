@@ -54,7 +54,7 @@ public class ParametersTest {
      * @throws Exception
      */
 	@Test
-	public void insertTest() throws Exception{
+	public void getTest() throws Exception{
 		mockMvc.perform(get("/parameters").contentType(MediaType.TEXT_HTML)
 				   .characterEncoding(CharEncoding.UTF_8)
 				   .accept(MediaType.APPLICATION_JSON)
@@ -69,7 +69,7 @@ public class ParametersTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void selectOneTest() throws Exception{
+	public void putTest() throws Exception{
 		ParametersParams parametersParams = new ParametersParams();
 		parametersParams.setStart_time("9:00:00");
 		parametersParams.setEnd_time("18:00:00");
