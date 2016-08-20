@@ -10,4 +10,18 @@
 			(#{employee_id}, #{sign_date}, #{sign_time},#{create_time})
 	</insert>
 	
+	<!-- 根据员工ID查找某个月每天打卡记录 -->
+	<select id="searchData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT
+			id, employee_id, sign_date, max(sign_time) max_time, min(sign_time) min_time, employee_name
+		FROM
+			sign_record_view
+		WHERE
+			sign_date >= #{startDate}
+		AND
+			#{endDate} >= sign_date
+		AND
+			employee_id = #{employee_id}
+		GROUP BY sign_date
+	</select>
 </mapper>

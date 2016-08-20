@@ -1,6 +1,10 @@
 package com.jedeft.attendence.service;
 
+import java.text.ParseException;
+import java.util.List;
+
 import com.jedeft.attendence.data.SignRecord;
+import com.jedeft.attendence.data.view.SignRecordView;
 
 /**
  * 
@@ -14,4 +18,12 @@ public interface ISignRecordService {
 	 * @param signRecord
 	 */
 	public void insertOne(SignRecord signRecord);
+	
+	/**
+	 * 根据员工ID以及月份时间来获取一个员工某个月的考勤表
+	 * @param employee_id
+	 * @param date
+	 * @return
+	 */
+	public List<SignRecordView> searchData(Long employee_id, String date) throws ParseException;
 }

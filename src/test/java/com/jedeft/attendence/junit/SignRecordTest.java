@@ -63,7 +63,7 @@ public class SignRecordTest {
 		SignRecordParams signRecordParams = new SignRecordParams();
 		List<Employee> list = employeeService.searchData();
 		signRecordParams.setEmployee_id(list.get(0).getId());
-		signRecordParams.setSign_time("2016-8-20 18:00:00");
+		signRecordParams.setSign_time("2016-8-20 9:00:00");
 		
 		mockMvc.perform(post("/signRecord").contentType(MediaType.APPLICATION_JSON)
 				   .content(JSONUtils.convertObject2Json(signRecordParams))

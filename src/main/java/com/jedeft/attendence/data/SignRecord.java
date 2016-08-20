@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 public class SignRecord {
 	private Long id;
 	private Long employee_id;
+	private String employee_name;
 	private Date sign_date;
 	private Long sign_time;
 	private Timestamp create_time;
@@ -56,10 +57,18 @@ public class SignRecord {
 		this.create_time = create_time;
 	}
 
-	public SignRecord(Long employee_id, Date sign_date, Long sign_time,
-			Timestamp create_time) {
-		super();
+	public String getEmployee_name() {
+		return employee_name;
+	}
+
+	public void setEmployee_name(String employee_name) {
+		this.employee_name = employee_name;
+	}
+
+	public SignRecord(Long employee_id, String employee_name, Date sign_date,
+			Long sign_time, Timestamp create_time) {
 		this.employee_id = employee_id;
+		this.employee_name = employee_name;
 		this.sign_date = sign_date;
 		this.sign_time = sign_time;
 		this.create_time = create_time;
