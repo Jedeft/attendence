@@ -56,7 +56,7 @@ public class ParametersController {
 	}
 	
 	@RequestMapping(value = "/parameters", method = RequestMethod.PUT)
-	@ApiOperation(value = "设置考勤配置", httpMethod = "PUT", response = ResponseMsg.class, notes = "PUT方法，请保证参数全量")
+	@ApiOperation(value = "设置考勤配置", httpMethod = "PUT", response = ResponseMsg.class, notes = "时间参数格式为：HH:mm:ss")
 	public ResponseMsg setParameters(@ApiParam(required = true, name = "params", value = "考勤参数") @RequestBody ParametersParams params) {
 		ResponseMsg responseMsg = new ResponseMsg();
 		
