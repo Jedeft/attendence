@@ -1,10 +1,10 @@
 package com.jedeft.attendence.junit;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
 
 import org.apache.commons.codec.CharEncoding;
 import org.junit.Before;
@@ -21,14 +21,16 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.jedeft.attendence.base.utils.JSONUtils;
-import com.jedeft.attendence.data.params.ParametersParams;
+import com.jedeft.attendence.data.Employee;
+import com.jedeft.attendence.data.params.SignRecordParams;
+import com.jedeft.attendence.service.IEmployeeService;
 
 
 /**
  * 
- * @Description: 考勤参数单元测试
+ * @Description: 签到记录单元测试
  * @author Jedeft
- * @date 2016年8月20日 下午8:19:32
+ * @date 2016年8月20日 下午9:23:08
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration(value = "src/main/webapp")  
@@ -36,10 +38,13 @@ import com.jedeft.attendence.data.params.ParametersParams;
         @ContextConfiguration(name = "parent", locations = "classpath:spring-mybatis.xml"),  
         @ContextConfiguration(name = "child", locations = "classpath:spring-mvc.xml")  
 })  
-public class ParametersTest {
+public class SignRecordTest {
 	
 	@Autowired  
     private WebApplicationContext wac;  
+
+	@Autowired
+	private IEmployeeService employeeService;
 	
     private MockMvc mockMvc;
     
@@ -49,36 +54,19 @@ public class ParametersTest {
     } 
     
     /**
-     * url : /parameters
-     * method : GET
+     * url : /signRecord
+     * method : POST
      * @throws Exception
      */
 	@Test
 	public void insertTest() throws Exception{
-		mockMvc.perform(get("/parameters").contentType(MediaType.TEXT_HTML)
-				   .characterEncoding(CharEncoding.UTF_8)
-				   .accept(MediaType.APPLICATION_JSON)
-				   .characterEncoding(CharEncoding.UTF_8))
-			  .andExpect(status().isOk())
-			  .andDo(print());
-	}
-	
-	/**
-	 * url : /parameters
-	 * method : PUT
-	 * @throws Exception
-	 */
-	@Test
-	public void selectOneTest() throws Exception{
-		ParametersParams parametersParams = new ParametersParams();
-		parametersParams.setStart_time("9:00:00");
-		parametersParams.setEnd_time("18:00:00");
-		parametersParams.setLate_time(15);
-		parametersParams.setEarly_time(15);
-		parametersParams.setMin_work_time(5);
+		SignRecordParams signRecordParams = new SignRecordParams();
+		List<Employee> list = employeeService.searchData();
+		signRecordParams.setEmployee_id(list.get(0).getId());
+		signRecordParams.setSign_time("2016-8-20 18:00:00");
 		
-		mockMvc.perform(put("/parameters").contentType(MediaType.APPLICATION_JSON)
-				   .content(JSONUtils.convertObject2Json(parametersParams))
+		mockMvc.perform(post("/signRecord").contentType(MediaType.APPLICATION_JSON)
+				   .content(JSONUtils.convertObject2Json(signRecordParams))
 				   .characterEncoding(CharEncoding.UTF_8)
 				   .accept(MediaType.APPLICATION_JSON)
 				   .characterEncoding(CharEncoding.UTF_8))
