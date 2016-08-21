@@ -94,4 +94,30 @@ public class SignRecordController {
 
 		return responseMsg;
 	}
+	
+	@RequestMapping(value = "/signRecord/abnormality", method = RequestMethod.GET)
+	@ApiOperation(value = "某个月的异常考勤表，是signRecord的子集", httpMethod = "GET", response = ResponseMsg.class, notes = "时间参数格式为：yyyy-MM，不传时间参数时默认值为当月")
+	public ResponseMsg searchSignRecord(
+			@ApiParam(required = false, name = "month", value = "月份") @RequestParam(value="month", required = false) String month) {
+		ResponseMsg responseMsg = new ResponseMsg();
+
+		try {
+			if (month == null) {
+				month = DateUtils.getDateStr(new Date().getTime());
+			}
+			responseMsg.data = signRecordService.searchAbnormality(month);
+			responseMsg.errorCode = ErrorCode.CALL_SUCCESS.code;
+			responseMsg.msg = ErrorCode.CALL_SUCCESS.name;
+		} catch (ServiceException e) {
+			ErrorCode code = e.getErrorCode();
+			responseMsg.errorCode = code.code;
+			responseMsg.msg = code.name;
+		} catch (ParseException e) {
+			log.error(e);
+			responseMsg.errorCode = ErrorCode.ERROR_TIME_FORMAT.code;
+			responseMsg.msg = ErrorCode.ERROR_TIME_FORMAT.name;
+		} 
+
+		return responseMsg;
+	}
 }

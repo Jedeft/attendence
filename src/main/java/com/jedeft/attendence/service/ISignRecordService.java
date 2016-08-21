@@ -26,4 +26,11 @@ public interface ISignRecordService {
 	 * @return
 	 */
 	public List<SignRecordView> searchData(Long employee_id, String date) throws ParseException;
+	
+	/**
+	 * 获取某个月的异常考勤表
+	 * @param date
+	 * @return
+	 */
+	public List<SignRecordView> searchAbnormality(String date) throws ParseException;
 }
