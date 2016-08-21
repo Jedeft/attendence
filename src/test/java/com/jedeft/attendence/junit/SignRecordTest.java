@@ -78,16 +78,29 @@ public class SignRecordTest {
 	
 	/**
      * url : /signRecord/{employee_id}
-     * method : POST
+     * method : GET
      * @throws Exception
      */
 	@Test
 	public void getTest() throws Exception{
-		SignRecordParams signRecordParams = new SignRecordParams();
 		List<Employee> list = employeeService.searchData();
-		signRecordParams.setEmployee_id(list.get(0).getId());
 		
 		mockMvc.perform(get("/signRecord/" + list.get(0).getId() + "?month=2016-5").contentType(MediaType.TEXT_HTML)
+				   .characterEncoding(CharEncoding.UTF_8)
+				   .accept(MediaType.APPLICATION_JSON)
+				   .characterEncoding(CharEncoding.UTF_8))
+			  .andExpect(status().isOk())
+			  .andDo(print());
+	}
+	
+	/**
+     * url : /signRecord/abnormality
+     * method : GET
+     * @throws Exception
+     */
+	@Test
+	public void getAbnormalityTest() throws Exception{
+		mockMvc.perform(get("/signRecord/abnormality?month=2016-5").contentType(MediaType.TEXT_HTML)
 				   .characterEncoding(CharEncoding.UTF_8)
 				   .accept(MediaType.APPLICATION_JSON)
 				   .characterEncoding(CharEncoding.UTF_8))
