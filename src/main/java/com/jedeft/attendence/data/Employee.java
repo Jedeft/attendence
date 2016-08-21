@@ -36,14 +36,4 @@ public class Employee {
 	public void setCreate_time(Timestamp create_time) {
 		this.create_time = create_time;
 	}
-
-	public Employee(String name, Timestamp create_time) {
-		this.name = name;
-		this.create_time = create_time;
-	}
-
-	public Employee() {
-		super();
-	}
-
 }
