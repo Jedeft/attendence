@@ -21,6 +21,8 @@ public class DateUtils {
 	
 	public static final SimpleDateFormat weekSdf = new SimpleDateFormat("EEEE");
 	
+	public static final SimpleDateFormat monthSdf = new SimpleDateFormat("yyyy-MM");
+	
 	/**
 	 * 根据yyyy-MM-dd日期获取Long值
 	 * @param date
@@ -105,9 +107,8 @@ public class DateUtils {
 	 */
 	public static Integer getMonthDays(String date) throws ParseException {
 		String[] dateArray = date.split("-");
-		if (dateArray == null) {
-			throw new ParseException("时间格式错误", 87);
-		}
+		//校验时间格式是否正确
+		monthSdf.parse(date);
 		String year = dateArray[0];
 		String month = dateArray[1];
 		switch (Integer.valueOf(month)) {
