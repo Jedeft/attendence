@@ -80,13 +80,11 @@ public class CreateData {
 					//周内正常上班
 					insertSignRecord(signRecord, amTime, pmTime, signDate,
 							random, employee);
-					signRecordService.insertOne(signRecord);
 		    	} else {
 		    		//小概率出现加班
 					if (JudgeUtils.getSmallProbability()) {
 						insertSignRecord(signRecord, amTime, pmTime, signDate,
 								random, employee);
-						signRecordService.insertOne(signRecord);
 					}
 		    	}
 				// 一天有 86400000 毫秒
@@ -119,20 +117,24 @@ public class CreateData {
 		}
 		signRecord.setSign_time(am);
 		signRecordService.insertOne(signRecord);
-		//下午签到，小概率出现早退
-		if (JudgeUtils.getSmallProbability()) {
-			//一半概率出现严重早退现象
-			if (JudgeUtils.getBigProbability()) {
-				//不严重时随机早退30分钟内
-				pm -= random.nextInt(30) * 60 * 1000;
+		//小概率出现下午忘记打卡事件
+		if (!JudgeUtils.getSmallProbability()) {
+			//下午签到，小概率出现早退
+			if (JudgeUtils.getSmallProbability()) {
+				//一半概率出现严重早退现象
+				if (JudgeUtils.getBigProbability()) {
+					//不严重时随机早退30分钟内
+					pm -= random.nextInt(30) * 60 * 1000;
+				} else {
+					//严重时随机早退2小时以内
+					pm -= (random.nextInt(2) + 1) * 60 * 60 * 1000;
+				}
 			} else {
-				//严重时随机早退2小时以内
-				pm -= (random.nextInt(2) + 1) * 60 * 60 * 1000;
+				pm += (random.nextInt(60) * 60 + random.nextInt(60)) * 1000;
 			}
-		} else {
-			pm += (random.nextInt(60) * 60 + random.nextInt(60)) * 1000;
+			signRecord.setSign_time(pm);
+			signRecordService.insertOne(signRecord);
 		}
-		signRecord.setSign_time(pm);
 	}
     
 }
