@@ -71,39 +71,43 @@ public class SignRecordServiceImpl implements ISignRecordService{
 		DecimalFormat df = new DecimalFormat("#.00");
 		for(Map<String, Object> record : recordList){
 			String dayDate = record.get("sign_date").toString();
+			String week = DateUtils.getWeek(new Date(DateUtils.getDate(dayDate)));
 			Long start = (Long)record.get("min_time");
     		Long end = (Long)record.get("max_time");
-			
-			SignRecordView signRecordView = new SignRecordView();
-			signRecordView.setEmployee_id((Long)record.get("employee_id"));
-			signRecordView.setEmployee_name(record.get("employee_name").toString());
-			signRecordView.setStart_time(DateUtils.getTimeStr(DateUtils.getDate(dayDate) + start));
-			signRecordView.setEnd_time(DateUtils.getTimeStr(DateUtils.getDate(dayDate) + end));
-			
-	    	String week = DateUtils.getWeek(new Date(DateUtils.getDate(dayDate)));
-	    	Long workHours = end - start;
+    		String workHours = null;
     		String remark = null;
-	    	if (!week.contains("六") && !week.contains("日")) {
-	    		//周内上班
-	    		if (workHours >= minTime) {
-	    			if (start < startTime && end >= endTime) {
-	    				remark = "正常";
-	    			} else if (start >= startTime && end < endTime) {
-	    				remark = "迟到/早退";
-	    			} else if (start >= startTime) {
-	    				remark = "迟到";
-	    			} else if (end < endTime) {
-	    				remark = "早退";
-	    			}
-	    		} else {
-	    			remark = "缺勤";
-	    		}
-	    	} else {
-	    		remark = "加班";
-	    	}
-	    	
-	    	signRecordView.setRemark(remark);
-    		signRecordView.setWorkHours(df.format(Double.valueOf(workHours.toString()) / 1000 / 60 / 60));
+    		SignRecordView signRecordView = new SignRecordView();
+			if (start.compareTo(end) != 0) {
+				signRecordView.setEmployee_id((Long)record.get("employee_id"));
+				signRecordView.setEmployee_name(record.get("employee_name").toString());
+				signRecordView.setStart_time(DateUtils.getTimeStr(DateUtils.getDate(dayDate) + start));
+				signRecordView.setEnd_time(DateUtils.getTimeStr(DateUtils.getDate(dayDate) + end));
+		    	Long temphours = end - start;
+		    	if (!week.contains("六") && !week.contains("日")) {
+		    		//周内上班
+		    		if (temphours >= minTime) {
+		    			if (start < startTime && end >= endTime) {
+		    				remark = "正常";
+		    			} else if (start >= startTime && end < endTime) {
+		    				remark = "迟到/早退";
+		    			} else if (start >= startTime) {
+		    				remark = "迟到";
+		    			} else if (end < endTime) {
+		    				remark = "早退";
+		    			}
+		    		} else {
+		    			remark = "缺勤";
+		    		}
+		    	} else {
+		    		remark = "加班";
+		    	}
+		    	workHours = df.format(Double.valueOf(temphours.toString()) / 1000 / 60 / 60);
+			} else {
+				remark = "打卡异常（一天只打了一次卡）";
+				workHours = "0";
+			}
+			signRecordView.setRemark(remark);
+    		signRecordView.setWorkHours(workHours);
     		signRecordView.setWeek(week);
 	    	list.add(signRecordView);
         }
